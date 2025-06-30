@@ -19,6 +19,9 @@ import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 
@@ -69,12 +72,24 @@ fun UserLocationMap() {
                 location?.let {
                     val latLng = LatLng(it.latitude, it.longitude)
                     userLocaton = latLng
-                    cameraPosition.position = CameraPosition.fromLatLngZoom(latLng, 10f)
+                    cameraPosition.position = CameraPosition.fromLatLngZoom(latLng, 12f)
                 }
             }
         }
         catch (e: SecurityException){
             e.printStackTrace()
+        }
+    }
+
+    GoogleMap(
+        modifier = Modifier.fillMaxSize(),
+        cameraPositionState =  cameraPosition
+    ){
+        userLocaton?.let { location ->
+            Marker(
+                state = MarkerState(position =location),
+                title = "Mi ubicacion"
+            )
         }
     }
 
