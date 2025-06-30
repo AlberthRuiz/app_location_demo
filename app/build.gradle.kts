@@ -41,6 +41,26 @@ android {
 
 dependencies {
 
+    // Jetpack compose
+    implementation(platform("androidx.compose:compose-bom:2024.05.00"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
+    implementation("org.jetbrains.kotlin:kotlin-coroutines-playservices:1.8.0")
+
+    // Location Services
+    implementation("com.google.maps.android:maps-compose:4.3.3")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+
+    implementation("com.google.accompanist:accompanist-permissions:0.35.1-alpha")
+
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
+
+    implementation("androidx.work:work-runtime:2.9.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
