@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import edu.pe.cibertec.screens.BasicMapScreen
+import edu.pe.cibertec.screens.PermissionMapScreen
+import edu.pe.cibertec.screens.RealLocationMapScreen
 import edu.pe.cibertec.ui.theme.App_location_demoTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +22,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             App_location_demoTheme {
-                BasicMapScreen()
+                RealLocationMapScreen()
             }
         }
     }
