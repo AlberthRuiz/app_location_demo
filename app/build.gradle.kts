@@ -46,7 +46,7 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation("org.jetbrains.kotlin:kotlin-coroutines-playservices:1.8.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.0")
 
     // Location Services
     implementation("com.google.maps.android:maps-compose:4.3.3")
