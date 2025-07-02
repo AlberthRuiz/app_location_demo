@@ -60,39 +60,47 @@ fun RealLocationMapScreen(){
 @Composable
 fun UserLocationMap() {
     val context = LocalContext.current
-    var fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
+    val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
+    val locationRequest = remember {
+        com.google.android.gms.location.LocationRequest.create().apply {
+            interval = 5000 // Actualización cada 5 segundos
+            fastestInterval = 2000
+            priority = com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY
+        }
+    }
 
-    var userLocaton by remember { mutableStateOf<LatLng?>(null) }
-
+    var userLocation by remember { mutableStateOf<LatLng?>(null) }
     val cameraPosition = rememberCameraPositionState()
 
     LaunchedEffect(Unit) {
         try {
-            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                location?.let {
-                    val latLng = LatLng(it.latitude, it.longitude)
-                    userLocaton = latLng
-                    cameraPosition.position = CameraPosition.fromLatLngZoom(latLng, 12f)
-                }
-            }
-        }
-        catch (e: SecurityException){
+            fusedLocationClient.requestLocationUpdates(
+                locationRequest,
+                object : com.google.android.gms.location.LocationCallback() {
+                    override fun onLocationResult(result: com.google.android.gms.location.LocationResult) {
+                        result.lastLocation?.let {
+                            val latLng = LatLng(it.latitude, it.longitude)
+                            userLocation = latLng
+                            cameraPosition.position = CameraPosition.fromLatLngZoom(latLng, 15f)
+                        }
+                    }
+                },
+                context.mainLooper
+            )
+        } catch (e: SecurityException) {
             e.printStackTrace()
         }
     }
 
     GoogleMap(
         modifier = Modifier.fillMaxSize(),
-        cameraPositionState =  cameraPosition
-    ){
-        userLocaton?.let { location ->
+        cameraPositionState = cameraPosition
+    ) {
+        userLocation?.let { location ->
             Marker(
-                state = MarkerState(position =location),
-                title = "Mi ubicacion"
+                state = MarkerState(position = location),
+                title = "Mi ubicación"
             )
         }
     }
-
-
-
 }
